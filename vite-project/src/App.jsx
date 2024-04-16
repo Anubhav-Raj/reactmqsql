@@ -18,7 +18,6 @@ const Box = ({ initialValue, onSave, id }) => {
   const handleSave = async () => {
     onSave(inputValue, id, setInputVisible); // Pass setInputVisible to onSave function
     setNumber(inputValue);
-    // setInputVisible(false); // Removed from here
   };
 
   return (
@@ -40,7 +39,9 @@ const Box = ({ initialValue, onSave, id }) => {
       }}
       onClick={handleClick}
     >
-      <div style={{ textAlign: "center" }}>Num: {number}</div>
+      <div style={{ textAlign: "center" }}>
+        Num: {isInputVisible === false ? number : null}
+      </div>
       {isInputVisible && (
         <div style={{ marginTop: "10px" }}>
           <input
