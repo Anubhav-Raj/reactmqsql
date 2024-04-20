@@ -3,7 +3,12 @@ import axios from "axios";
 
 // Left arrow SVG icon
 const LeftArrowIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+  >
     <path d="M14 7l-5 5 5 5V7z" />
     <path fill="none" d="M24 0v24H0V0h24z" />
   </svg>
@@ -11,13 +16,23 @@ const LeftArrowIcon = () => (
 
 // Right arrow SVG icon
 const RightArrowIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+  >
     <path d="M10 17l5-5-5-5v10z" />
     <path fill="none" d="M0 24V0h24v24H0z" />
   </svg>
 );
 
-const VirtualKeyboard = ({ inputValue, setInputValue, handleSave, handleClose }) => {
+const VirtualKeyboard = ({
+  inputValue,
+  setInputValue,
+  handleSave,
+  handleClose,
+}) => {
   const handleClick = (char) => {
     setInputValue((prevValue) => prevValue + char);
   };
@@ -35,29 +50,33 @@ const VirtualKeyboard = ({ inputValue, setInputValue, handleSave, handleClose })
     if (input) {
       input.focus();
       if (input.selectionStart > 0) {
-        input.setSelectionRange(input.selectionStart - 1, input.selectionStart - 1);
+        input.setSelectionRange(
+          input.selectionStart - 1,
+          input.selectionStart - 1
+        );
       }
     }
   };
-  
+
   const handleMoveCursorRight = () => {
     const input = document.getElementById("inputField");
     if (input) {
       input.focus();
       if (input.selectionStart < input.value.length) {
-        input.setSelectionRange(input.selectionStart + 1, input.selectionStart + 1);
+        input.setSelectionRange(
+          input.selectionStart + 1,
+          input.selectionStart + 1
+        );
       }
     }
   };
 
   // Add event listener for keydown event
-  document.addEventListener('keydown', (event) => {
+  document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {
-        handleEscape();
+      handleEscape();
     }
   });
-  
-  
 
   const handleEnter = () => {
     handleSave();
@@ -66,8 +85,7 @@ const VirtualKeyboard = ({ inputValue, setInputValue, handleSave, handleClose })
   const handleEscape = () => {
     console.log("Escape button clicked");
     handleClose(); // Call the handleClose function to close the virtual keyboard or any other component
-};
-
+  };
 
   return (
     <div
@@ -89,33 +107,64 @@ const VirtualKeyboard = ({ inputValue, setInputValue, handleSave, handleClose })
         margin: "0 auto",
       }}
     >
-      <button className="key" onClick={() => handleClick("1")}>1</button>
-      <button className="key" onClick={() => handleClick("2")}>2</button>
-      <button className="key" onClick={() => handleClick("3")}>3</button>
-      <button className="key" onClick={() => handleClick("4")}>4</button>
-      <button className="key" onClick={() => handleClick("5")}>5</button>
-      <button className="key" onClick={() => handleClick("6")}>6</button>
-      <button className="key" onClick={() => handleClick("7")}>7</button>
-      <button className="key" onClick={() => handleClick("8")}>8</button>
-      <button className="key" onClick={() => handleClick("9")}>9</button>
-      <button className="key" onClick={() => handleClick("0")}>0</button>
-      <button className="key" onClick={handleDelete}>Del</button>
-      <button className="key" onClick={handleBackspace}>BS</button>
+      <button className="key" onClick={() => handleClick("1")}>
+        1
+      </button>
+      <button className="key" onClick={() => handleClick("2")}>
+        2
+      </button>
+      <button className="key" onClick={() => handleClick("3")}>
+        3
+      </button>
+      <button className="key" onClick={() => handleClick("4")}>
+        4
+      </button>
+      <button className="key" onClick={() => handleClick("5")}>
+        5
+      </button>
+      <button className="key" onClick={() => handleClick("6")}>
+        6
+      </button>
+      <button className="key" onClick={() => handleClick("7")}>
+        7
+      </button>
+      <button className="key" onClick={() => handleClick("8")}>
+        8
+      </button>
+      <button className="key" onClick={() => handleClick("9")}>
+        9
+      </button>
+      <button className="key" onClick={() => handleClick("0")}>
+        0
+      </button>
+      <button className="key" onClick={handleDelete}>
+        Del
+      </button>
+      <button className="key" onClick={handleBackspace}>
+        BS
+      </button>
       <button className="arrow" onClick={handleMoveCursorLeft}>
         <LeftArrowIcon />
       </button>
       <button className="arrow" onClick={handleMoveCursorRight}>
         <RightArrowIcon />
       </button>
-      <button className="key" onClick={handleEnter}>Enter</button>
-      <button className="key" onClick={handleEscape}>ESC</button> 
-      <button className="key" onClick={() => setInputValue("")}>Clear</button>
+      <button className="key" onClick={handleEnter}>
+        Enter
+      </button>
+      <button className="key" onClick={handleEscape}>
+        ESC
+      </button>
+      <button className="key" onClick={() => setInputValue("")}>
+        Clear
+      </button>
     </div>
   );
 };
 
 const Box = ({ initialValue, onSave, id }) => {
   const [number, setNumber] = useState(initialValue);
+  const [prenum, setprenum] = useState(number);
   const [inputValue, setInputValue] = useState("");
   const [isInputVisible, setInputVisible] = useState(false);
 
@@ -140,8 +189,9 @@ const Box = ({ initialValue, onSave, id }) => {
   };
 
   const handleCloseKeyboard = () => {
-    setInputVisible(false); // Close the virtual keyboard
-};
+    onSave(prenum, id, setInputVisible);
+    setInputVisible(false);
+  };
 
   return (
     <div
@@ -168,21 +218,21 @@ const Box = ({ initialValue, onSave, id }) => {
       </div>
       {isInputVisible && (
         <div style={{ marginTop: "10px", position: "relative" }}>
-      <input
-        id="inputField"
-        type="text"
-        value={inputValue}
-        onChange={handleChange}
-        onClick={(e) => e.target.select()} // Select all text when clicked
-        onKeyDown={handleKeyDown}
-        style={{
-          padding: "5px",
-          borderRadius: "4px",
-          border: "1px solid #ddd",
-          width: "50px",
-          marginRight: "5px",
-        }}
-      />
+          <input
+            id="inputField"
+            type="text"
+            value={inputValue}
+            onChange={handleChange}
+            onClick={(e) => e.target.select()} // Select all text when clicked
+            onKeyDown={handleKeyDown}
+            style={{
+              padding: "5px",
+              borderRadius: "4px",
+              border: "1px solid #ddd",
+              width: "50px",
+              marginRight: "5px",
+            }}
+          />
           <button
             onClick={handleSave}
             style={{
